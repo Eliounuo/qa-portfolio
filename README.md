@@ -19,10 +19,35 @@ Manual QA Engineer based in Astana, Kazakhstan. I test web applications at UI, A
 
 ## Experience
 
-- **WuKey.kz** — Manual QA Engineer. Web platform for short-term housing rental.
-- **Bakai Bank** — Junior Manual QA Engineer. Digital banking: transfers, payments, accounts, cards.
+### WuKey.kz — Manual QA Engineer
 
-Dates and details are on LinkedIn.
+Web platform for short-term housing rental (own startup).
+
+- Analysed requirements before development and wrote acceptance criteria.
+- Built the test documentation: test cases and checklists for the main modules, used as the base for regression testing.
+- Functional and UI testing of registration, sign-in and profile: required fields, formats, boundary values, error messages, session behaviour, cross-browser and responsive checks.
+- Tested the full listing cycle (create, edit, delete) on three levels: UI, API response, database record.
+- API testing in Postman: GET, POST, PUT/PATCH, DELETE, status codes, JSON structure, negative scenarios.
+- SQL (`SELECT`, `WHERE`, `JOIN`) to compare data after actions in UI and API.
+- Localised defects with Chrome DevTools (Network, Console) to tell frontend from backend problems; retest and sanity after fixes.
+- Release checks: regression scope, regression before release, smoke after deployment, post-release verification.
+
+### Bakai Bank — Junior Manual QA Engineer
+
+Digital banking platform (mobile and internet banking): sign-in, accounts, cards, transfers, service payments, transaction history.
+
+- Functional testing of transfers between accounts and cards: positive, negative and boundary scenarios — minimum and maximum amounts, insufficient balance, invalid details, fee calculation.
+- Tested service payments: validation of recipient details, error handling, transaction statuses, appearance in history.
+- Checked accounts and cards: balances, details, balance changes after financial operations.
+- API testing in Postman: REST requests, status codes, JSON structure and values, invalid requests, authorisation errors.
+- SQL (`SELECT`, `WHERE`, `JOIN`) to verify transactions in the database against UI and API.
+- Integration testing of the chain "transfer / payment → account balance → transaction history".
+- Wrote and maintained test cases and checklists; reported bugs in Jira and followed them through fix, retest and regression.
+- Took part in the release cycle: regression before release, smoke on the test environment, UAT of business scenarios.
+
+Dates are on LinkedIn.
+
+> **The samples below are only a part of my work.** Materials from the bank are internal and are not published. What you see here is a separate test run of the public part of WuKey, prepared to show how I document testing.
 
 ## Work samples
 
