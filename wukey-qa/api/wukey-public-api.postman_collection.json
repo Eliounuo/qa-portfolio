@@ -1,0 +1,505 @@
+{
+  "info": {
+    "name": "WuKey public API - anonymous checks",
+    "description": "Read-only checks for a guest user. Set base_url, anon_key and private_resource in collection variables. No real values are stored here.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": ""
+    },
+    {
+      "key": "anon_key",
+      "value": ""
+    },
+    {
+      "key": "private_resource",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "A01 Active listings",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 200\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{anon_key}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{anon_key}}"
+          }
+        ],
+        "url": "{{base_url}}/properties?select=*&status=eq.active&limit=5"
+      }
+    },
+    {
+      "name": "A02 List without filters",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 200\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{anon_key}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{anon_key}}"
+          }
+        ],
+        "url": "{{base_url}}/properties?select=id"
+      }
+    },
+    {
+      "name": "A03 No API key",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 401\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([401]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{base_url}}/properties?select=id&limit=1"
+      }
+    },
+    {
+      "name": "A04 Invalid API key",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 401\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([401]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "invalid"
+          }
+        ],
+        "url": "{{base_url}}/properties?select=id&limit=1"
+      }
+    },
+    {
+      "name": "A05 Resource does not exist",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 404\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([404]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{anon_key}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{anon_key}}"
+          }
+        ],
+        "url": "{{base_url}}/no_such_table?select=*"
+      }
+    },
+    {
+      "name": "A06 Field does not exist",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 400\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([400]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{anon_key}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{anon_key}}"
+          }
+        ],
+        "url": "{{base_url}}/properties?select=no_such_col"
+      }
+    },
+    {
+      "name": "A07 Invalid ID format",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 400\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([400]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{anon_key}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{anon_key}}"
+          }
+        ],
+        "url": "{{base_url}}/properties?id=eq.abc"
+      }
+    },
+    {
+      "name": "A08 Valid ID not found",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 200\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{anon_key}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{anon_key}}"
+          }
+        ],
+        "url": "{{base_url}}/properties?id=eq.00000000-0000-0000-0000-000000000000"
+      }
+    },
+    {
+      "name": "A09 Negative limit",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 416\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([416]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{anon_key}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{anon_key}}"
+          }
+        ],
+        "url": "{{base_url}}/properties?select=id&limit=-1"
+      }
+    },
+    {
+      "name": "A10 Guest cannot create a listing",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 401 or 403\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([401, 403]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{anon_key}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{anon_key}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{base_url}}/properties",
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        }
+      }
+    },
+    {
+      "name": "A11-A15 Guest cannot read a private resource",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 200\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200]);",
+              "});",
+              "pm.test(\"No rows returned to a guest\", function () {",
+              "    pm.expect(pm.response.json()).to.eql([]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{anon_key}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{anon_key}}"
+          }
+        ],
+        "url": "{{base_url}}/{{private_resource}}?select=*"
+      }
+    },
+    {
+      "name": "A16 Cyrillic filter value",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 200\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{anon_key}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{anon_key}}"
+          }
+        ],
+        "url": "{{base_url}}/properties?select=id&city=eq.%D0%90%D1%81%D1%82%D0%B0%D0%BD%D0%B0"
+      }
+    },
+    {
+      "name": "A17 SQL-injection-like filter value",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 400 or 403\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([400, 403]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{anon_key}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{anon_key}}"
+          }
+        ],
+        "url": "{{base_url}}/properties?select=id&city=eq.%27%20OR%201%3D1--"
+      }
+    },
+    {
+      "name": "A18 Guest delete of a non-existent listing",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 204\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([204]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{anon_key}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{anon_key}}"
+          }
+        ],
+        "url": "{{base_url}}/properties?id=eq.00000000-0000-0000-0000-000000000000"
+      }
+    },
+    {
+      "name": "A19 Total count header",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 200\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{anon_key}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{anon_key}}"
+          },
+          {
+            "key": "Prefer",
+            "value": "count=exact"
+          }
+        ],
+        "url": "{{base_url}}/properties?select=id"
+      }
+    },
+    {
+      "name": "A20 Pricing items",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"Status is 200\", function () {",
+              "    pm.expect(pm.response.code).to.be.oneOf([200]);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "apikey",
+            "value": "{{anon_key}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{anon_key}}"
+          }
+        ],
+        "url": "{{base_url}}/pricing_items?select=*&is_active=eq.true"
+      }
+    }
+  ]
+}
